@@ -3,7 +3,8 @@
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree.
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
  */
 
 #if __has_feature(objc_arc)
@@ -80,7 +81,7 @@ NSArray *FBGetBlockStrongReferences(void *block) {
   if (!FBObjectIsBlock(block)) {
     return nil;
   }
-
+  
   NSMutableArray *results = [NSMutableArray new];
 
   void **blockReference = block;
@@ -100,11 +101,11 @@ NSArray *FBGetBlockStrongReferences(void *block) {
   return [results autorelease];
 }
 
-static Class _BlockClass(void) {
+static Class _BlockClass() {
   static dispatch_once_t onceToken;
   static Class blockClass;
   dispatch_once(&onceToken, ^{
-    void (^testBlock)(void) = [^{} copy];
+    void (^testBlock)() = [^{} copy];
     blockClass = [testBlock class];
     while(class_getSuperclass(blockClass) && class_getSuperclass(blockClass) != [NSObject class]) {
       blockClass = class_getSuperclass(blockClass);
@@ -116,7 +117,7 @@ static Class _BlockClass(void) {
 
 BOOL FBObjectIsBlock(void *object) {
   Class blockClass = _BlockClass();
-
+  
   Class candidate = object_getClass((__bridge id)object);
   return [candidate isSubclassOfClass:blockClass];
 }

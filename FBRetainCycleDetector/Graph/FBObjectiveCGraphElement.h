@@ -3,7 +3,8 @@
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree.
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
  */
 
 #import <Foundation/Foundation.h>
@@ -21,16 +22,13 @@
  Designated initializer.
  @param object Object this Graph Element will represent.
  @param configuration Provides detector's configuration that contains filters and options
+ @param filterProvider Filter Provider that Graph Element will use to determine which references need to be dropped
  @param namePath Description of how the object was retrieved from it's parent. Check namePath property.
  */
 - (nonnull instancetype)initWithObject:(nullable id)object
                          configuration:(nonnull FBObjectGraphConfiguration *)configuration
                               namePath:(nullable NSArray<NSString *> *)namePath;
 
-/**
- @param object Object this Graph Element will represent.
- @param configuration Provides detector's configuration that contains filters and options
- */
 - (nonnull instancetype)initWithObject:(nullable id)object
                          configuration:(nonnull FBObjectGraphConfiguration *)configuration;
 
@@ -55,14 +53,7 @@
  */
 - (size_t)objectAddress;
 
-/**
- @return class of the object
- */
 - (nullable Class)objectClass;
-
-/**
- @return a string of the classname or "(null)"
- */
 - (nonnull NSString *)classNameOrNull;
 
 @end
